@@ -2,8 +2,9 @@ import type { Context, ServiceSchema } from "moleculer";
 import type { ApiSettingsSchema, IncomingRequest, Route } from "moleculer-web";
 import ApiGateway from "moleculer-web";
 
-import { sequelize } from "../module/util/database";
+import { init } from "../database"
 
+init();
 
 interface Meta {
 	userAgent?: string | null | undefined;

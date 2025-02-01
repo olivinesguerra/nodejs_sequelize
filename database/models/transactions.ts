@@ -4,7 +4,7 @@ import { Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt , DataType } from
     tableName: "transactions",
     timestamps: true
 })
-class Transaction extends Model {
+export class Transaction extends Model {
 
     @Column({
         type: DataType.INTEGER,

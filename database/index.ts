@@ -1,5 +1,8 @@
+import dotenv from 'dotenv';
 import { Sequelize } from "sequelize-typescript";
-import { Block, Transaction } from "../../database/models";
+import { Block, Transaction } from "../database/models";
+
+dotenv.config()
 
 export const config = {
     HOST: process.env.DATABASE_HOST,
@@ -13,6 +16,8 @@ export const config = {
       idle: 10000
     }
 };
+
+console.log(config);
   
 export const dialect = "postgres";
 
@@ -32,15 +37,25 @@ const sequelize = new Sequelize({
   models: [Block, Transaction]
 });
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Connection has been established successfully.");
-  })
-  .catch((err) => {
-    console.error("Unable to connect to the Database:", err);
-  })
+export const init = () => {
+  return new Promise((resolve, reject) => {
+    sequelize
+      .authenticate()
+      .then(() => {
+        sequelize.sync({ force: false });
+        console.log("Connection has been established successfully.");
+        resolve(null);
+      })
+      .catch((err) => {
+        console.error("Unable to connect to the Database:", err);
+        reject(err);
+      })
+  }); 
+}
 
-export {
-  sequelize
+
+
+module.exports = {
+  sequelize,
+  init
 };

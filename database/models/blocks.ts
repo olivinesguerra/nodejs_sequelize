@@ -4,7 +4,7 @@ import { Table, Column, Model, DataType } from 'sequelize-typescript';
   tableName: "blocks",
   timestamps: true
 })
-export class Blocks extends Model {
+export class Block extends Model {
 
     @Column({
         type: DataType.INTEGER,
