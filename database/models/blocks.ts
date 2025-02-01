@@ -1,4 +1,5 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany, ForeignKey } from 'sequelize-typescript';
+import { Transaction } from "./transactions"
 
 @Table({
   tableName: "blocks",
@@ -7,12 +8,11 @@ import { Table, Column, Model, DataType } from 'sequelize-typescript';
 export class Block extends Model {
 
     @Column({
-        type: DataType.INTEGER,
+        type:DataType.UUID,
         primaryKey: true,
-        autoIncrement: true,
         field: "id"
     })
-    id?: number;
+    id?: string;
 
     @Column(DataType.STRING)
     hash? : string;
@@ -20,6 +20,6 @@ export class Block extends Model {
     @Column(DataType.INTEGER)
     tx_count?: number | null;
 
-  // @HasMany(() => Hobby)
-  // hobbies: Hobby[];
+    @HasMany(() => Transaction, "block_id")
+    transactions?: Transaction[];
 }

@@ -1,4 +1,5 @@
-import { Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt , DataType } from 'sequelize-typescript';
+import { Table, Column, Model, NotNull, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript';
+import { Block } from "./blocks"
 
 @Table({
     tableName: "transactions",
@@ -7,13 +8,15 @@ import { Table, Column, Model, CreatedAt, UpdatedAt, DeletedAt , DataType } from
 export class Transaction extends Model {
 
     @Column({
-        type: DataType.INTEGER,
+        type: DataType.UUID,
         primaryKey: true,
-        autoIncrement: true,
         field: "id"
     })
-    id?: number;
-
+    id?: string;
+    
+    @ForeignKey(() => Block)
+    @Column(DataType.UUID)
+    block_id? : string;
 
     @Column(DataType.STRING)
     hash? : string;
@@ -29,5 +32,9 @@ export class Transaction extends Model {
 
     @Column(DataType.INTEGER)
     nonce?: number | null;
+
+    @BelongsTo(() => Block)
+    block?: Block;
+
 
 }
