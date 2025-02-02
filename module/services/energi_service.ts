@@ -1,4 +1,5 @@
-import type { Context } from "moleculer";
+import { Context, Cacher } from "moleculer";
+
 import * as htmlparser2 from "htmlparser2";
 
 
@@ -16,7 +17,7 @@ export const getBlocks = async(ctx: Context<GetListBlockParams>) => {
     return null;
 };
 
-export const createIndex = async (ctx: Context<GetListBlockParams>) => {
+export const createIndex = async (ctx: Context<GetListBlockParams>, cacher: any) => {
     const res = await EnergiRepository.getBlocks({ 
         type: "JSON",
         block_type: "Block"

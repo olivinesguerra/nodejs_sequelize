@@ -63,7 +63,24 @@ const brokerConfig: BrokerOptions = {
 
 	// Define a cacher.
 	// More info: https://moleculer.services/docs/0.14/caching.html
-    cacher: null,
+    cacher:  {
+		type: "Redis",
+		options: {
+			prefix: "TEST",
+			name: "first",
+			ttl: 30,
+			redis: {
+				host: "localhost",
+				port: 6380,
+				password: "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81",
+				db: 0
+			},
+			lock: {
+				ttl: 15, //the maximum amount of time you want the resource locked in seconds
+				staleTime: 10, // If the TTL is less than this number, means that the resources are staled
+			},
+		}
+	},
 
 	// Define a serializer.
 	// Available values: "JSON", "Avro", "ProtoBuf", "MsgPack", "Notepack", "Thrift".

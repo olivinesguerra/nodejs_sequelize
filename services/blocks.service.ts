@@ -89,7 +89,7 @@ const BlockService: ServiceSchema<BlockSettings> = {
             },
             async handler(this: BlockThis, ctx: Context<GetListBlockParams>): Promise<any> {
                 try { 
-                    const data = await EnergiService.createIndex(ctx);
+                    const data = await EnergiService.createIndex(ctx, ctx?.broker?.cacher);
                     return success("success", data, 200);
                 } catch(err) {
                     return error("Error", { message: err?.message}, 4000);

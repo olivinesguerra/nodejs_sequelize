@@ -1,4 +1,5 @@
 import type { Context, Service, ServiceSchema, ServiceSettingSchema } from "moleculer";
+import cron from "node-cron";
 
 import { EnergiService }  from "../module/services";
 import { success, error } from "../module/util/response";
@@ -8,6 +9,7 @@ import {
     BlockSettings,
     BlockThis
  } from "../module/util/typings";
+ 
 
 const IndexerService: ServiceSchema<BlockSettings> = {
     name: "indexer",
@@ -42,12 +44,18 @@ const IndexerService: ServiceSchema<BlockSettings> = {
     /**
      * Service created lifecycle event handler
      */
-    created() {},
+    created() {
+       
+    },
 
     /**
      * Service started lifecycle event handler
      */
-    async started() {},
+    async started() {
+        cron.schedule('* * * * *', () => {
+            console.log('running a task every minute');
+        });
+    },
 
     /**
      * Service stopped lifecycle event handler
