@@ -36,7 +36,7 @@ const ApiService: ServiceSchema<ApiSettingsSchema> = {
 				use: [],
 
 				// Enable/disable parameter merging method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Disable-merging
-				mergeParams: true,
+				mergeParams: false,
 
 				// Enable authentication. Implement the logic into `authenticate` method. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Authentication
 				authentication: false,

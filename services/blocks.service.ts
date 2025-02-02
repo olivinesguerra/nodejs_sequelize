@@ -1,28 +1,13 @@
 import type { Context, Service, ServiceSchema, ServiceSettingSchema } from "moleculer";
+
 import { EnergiService }  from "../module/services";
 import { success, error } from "../module/util/response";
-
-export interface ActionHelloParams {
-    name: string;
-}
-
-export interface GetTxtInfoParams {
-    txHash: string;
-}
-
-interface BlockSettings extends ServiceSettingSchema {
-    defaultName: string;
-}
-
-interface BlockMethods {
-    uppercase(str: string): string;
-}
-
-interface BlockLocalVars {
-    myVar: string;
-}
-
-type BlockThis = Service<BlockSettings> & BlockMethods & BlockLocalVars;
+import {
+    GetTxtInfoParams,
+    GetListBlockParams,
+    BlockSettings,
+    BlockThis
+ } from "../module/util/typings";
 
 const BlockService: ServiceSchema<BlockSettings> = {
     name: "block",
@@ -48,18 +33,16 @@ const BlockService: ServiceSchema<BlockSettings> = {
                 method: "GET",
                 path: "/",
             },
-            handler(this: BlockThis/* , ctx: Context */): string {
-                return `Hello ${this.settings.defaultName}`;
+            params: {
+                start_item_count: { type: "number", positive: true, integer: true, optional: true }
             },
-        },
-
-        blockBy100: {
-            rest: {
-                method: "GET",
-                path: "/:id",
-            },
-            handler(this: BlockThis/* , ctx: Context */): string {
-                return `Hello ${this.settings.defaultName}`;
+            async handler(this: BlockThis, ctx: Context<GetListBlockParams>): Promise<any> {
+                try { 
+                    const data = await EnergiService.getBlocks(ctx);
+                    return success("success", data, 200);
+                } catch(err) {
+                    return error("Error", { message: err?.message}, 4000);
+                }
             },
         },
 
@@ -69,8 +52,8 @@ const BlockService: ServiceSchema<BlockSettings> = {
                 method: "GET",
                 path: "/stats",
             },
-            handler(this: BlockThis, ctx: Context<ActionHelloParams>): string {
-                return `Welcome, ${ctx.params.name}`;
+            handler(this: BlockThis/*, ctx: Context<ActionHelloParams>*/): string {
+                return `Welcome`;
             },
         },
 
@@ -79,8 +62,8 @@ const BlockService: ServiceSchema<BlockSettings> = {
                 method: "GET",
                 path: "/tx",
             },
-            handler(this: BlockThis, ctx: Context<ActionHelloParams>): string {
-                return `Welcome, ${ctx.params.name}`;
+            handler(this: BlockThis/*, ctx: Context<ActionHelloParams>*/): string {
+                return `Welcome`;
             },
         },
 
@@ -104,8 +87,8 @@ const BlockService: ServiceSchema<BlockSettings> = {
                 method: "POST",
                 path: "/index ",
             },
-            handler(this: BlockThis, ctx: Context<ActionHelloParams>): string {
-                return `Welcome, ${ctx.params.name}`;
+            handler(this: BlockThis/*, ctx: Context<ActionHelloParams>*/): string {
+                return `Welcome`;
             },
         },
     },

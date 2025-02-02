@@ -24,6 +24,7 @@
   "devDependencies": {
     "@jest/globals": "^29.3.1",
     "@types/jest": "^29.2.3",
+    "@types/json-stringify-safe": "^5.0.3",
     "@types/node": "^18.19.74",
     "@types/pg": "^8.11.11",
     "@types/validator": "^13.12.2",
@@ -46,7 +47,12 @@
   },
   "dependencies": {
     "axios": "^1.7.9",
+    "domhandler": "^5.0.3",
     "dotenv": "^16.4.7",
+    "html-extractor": "^0.2.2",
+    "html-to-json-parser": "^2.0.1",
+    "htmlparser2": "^10.0.0",
+    "json-stringify-safe": "^5.0.1",
     "kysely": "^0.27.5",
     "moleculer": "^0.14.27",
     "moleculer-web": "^0.10.5",
