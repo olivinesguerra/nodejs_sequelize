@@ -1,0 +1,1 @@
+export * as EnergiService from "./energi_service"; 

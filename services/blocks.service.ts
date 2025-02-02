@@ -1,7 +1,13 @@
 import type { Context, Service, ServiceSchema, ServiceSettingSchema } from "moleculer";
+import { EnergiService }  from "../module/services";
+import { success, error } from "../module/util/response";
 
 export interface ActionHelloParams {
     name: string;
+}
+
+export interface GetTxtInfoParams {
+    txHash: string;
 }
 
 interface BlockSettings extends ServiceSettingSchema {
@@ -40,12 +46,23 @@ const BlockService: ServiceSchema<BlockSettings> = {
         block: {
             rest: {
                 method: "GET",
-                path: "/block",
+                path: "/",
             },
             handler(this: BlockThis/* , ctx: Context */): string {
                 return `Hello ${this.settings.defaultName}`;
             },
         },
+
+        blockBy100: {
+            rest: {
+                method: "GET",
+                path: "/:id",
+            },
+            handler(this: BlockThis/* , ctx: Context */): string {
+                return `Hello ${this.settings.defaultName}`;
+            },
+        },
+
 
         stats: {
             rest: {
@@ -64,6 +81,21 @@ const BlockService: ServiceSchema<BlockSettings> = {
             },
             handler(this: BlockThis, ctx: Context<ActionHelloParams>): string {
                 return `Welcome, ${ctx.params.name}`;
+            },
+        },
+
+        txById: {
+            rest: {
+                method: "GET",
+                path: "/tx/:txHash",
+            },
+            async handler(this: BlockThis, ctx: Context<GetTxtInfoParams>): Promise<any> {
+                try { 
+                    const data = await EnergiService.getTxInfo(ctx.params.txHash);
+                    return success("success", data, 200);
+                } catch(err) {
+                    return error("Error", { message: err?.message}, 4000);
+                }
             },
         },
 
