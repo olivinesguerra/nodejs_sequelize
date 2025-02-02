@@ -56,6 +56,7 @@
     "kysely": "^0.27.5",
     "moleculer": "^0.14.27",
     "moleculer-web": "^0.10.5",
+    "node-cron": "^3.0.3",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.2.2",

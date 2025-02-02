@@ -1,7 +1,9 @@
 import type { Service, ServiceSettingSchema } from "moleculer";
 
 export interface GetTxtInfoParams {
-    txHash: string;
+    params: {
+        txHash: string;
+    }
 };
 
 export interface GetListBlockParams {

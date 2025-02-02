@@ -72,9 +72,9 @@ const BlockService: ServiceSchema<BlockSettings> = {
                 method: "GET",
                 path: "/tx/:txHash",
             },
-            async handler(this: BlockThis, ctx: Context<GetTxtInfoParams>): Promise<any> {
+            async handler(this: BlockThis, ctx: Context<any>): Promise<any> {
                 try { 
-                    const data = await EnergiService.getTxInfo(ctx.params.txHash);
+                    const data = await EnergiService.getTxInfo(ctx.params?.params?.txHash);
                     return success("success", data, 200);
                 } catch(err) {
                     return error("Error", { message: err?.message}, 4000);
@@ -87,8 +87,13 @@ const BlockService: ServiceSchema<BlockSettings> = {
                 method: "POST",
                 path: "/index ",
             },
-            handler(this: BlockThis/*, ctx: Context<ActionHelloParams>*/): string {
-                return `Welcome`;
+            async handler(this: BlockThis, ctx: Context<GetListBlockParams>): Promise<any> {
+                try { 
+                    const data = await EnergiService.createIndex(ctx);
+                    return success("success", data, 200);
+                } catch(err) {
+                    return error("Error", { message: err?.message}, 4000);
+                }
             },
         },
     },

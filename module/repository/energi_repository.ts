@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const getTxInfo = async (txHash: string) => {
-    return await axios.get(`https://explorer.energi.network/api?module=transaction&action=gettxinfo&txhash=${txHash}`);
+    console.log(`http://explorer.energi.network/api?module=transaction&action=gettxinfo&txhash=${txHash}`);
+    return await axios.get(`http://explorer.energi.network/api?module=transaction&action=gettxinfo&txhash=${txHash}`);
 };
 
 export const getBlocks = async (params: { block_number?: string | undefined, type?: string, block_type?: string | undefined, items_count?: string | number | undefined }) => {
@@ -19,4 +20,8 @@ export const getBlocks = async (params: { block_number?: string | undefined, typ
     console.log(`https://explorer.energi.network/block?${new URLSearchParams(tempFilter).toString()}`);
 
     return await axios.get(`https://explorer.energi.network/blocks?${new URLSearchParams(tempFilter).toString()}`);
+}
+
+export const getAllTransactionFromBlock = async(block: string) => {
+    return await axios.get(`https://explorer.energi.network/block/${block}/transactions?type=JSON`);
 }
