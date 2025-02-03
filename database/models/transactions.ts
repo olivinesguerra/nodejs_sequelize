@@ -1,4 +1,14 @@
-import { Table, Column, Model, NotNull, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript';
+import { 
+    Table, 
+    Column, 
+    Model, 
+    DataType, 
+    BelongsTo, 
+    ForeignKey,
+} from 'sequelize-typescript';
+import {
+    literal
+} from "sequelize";
 import { Block } from "./blocks"
 
 @Table({
@@ -10,16 +20,22 @@ export class Transaction extends Model {
     @Column({
         type: DataType.UUID,
         primaryKey: true,
-        field: "id"
+        defaultValue: DataType.UUIDV4
     })
     id?: string;
     
     @ForeignKey(() => Block)
     @Column(DataType.UUID)
-    block_id? : string;
+    blockNumber? : string | null;
 
     @Column(DataType.STRING)
-    hash? : string;
+    hash? : string | null;
+
+    @Column(DataType.STRING)
+    input? : string  | null;
+
+    @Column(DataType.STRING)
+    timeStamp? : string;
 
     @Column(DataType.STRING)
     from?: string | null;
@@ -27,14 +43,21 @@ export class Transaction extends Model {
     @Column(DataType.STRING)
     to?: string | null;
 
-    @Column(DataType.INTEGER)
-    amount?: number | null;
-
-    @Column(DataType.INTEGER)
-    nonce?: number | null;
-
     @BelongsTo(() => Block)
     block?: Block;
 
+    @Column(DataType.STRING)
+    gasPrice?: string | null;
 
+    @Column(DataType.STRING)
+    gasLimit?: string | null;
+
+    @Column(DataType.STRING)
+    gasUsed?: string | null;
+
+    @Column(DataType.STRING)
+    confirmations?: string | null;
+
+    @Column(DataType.STRING)
+    revertReason?: string | null;
 }

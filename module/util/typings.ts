@@ -1,7 +1,9 @@
 import type { Service, ServiceSettingSchema } from "moleculer";
 
 export interface GetTxtInfoParams {
-    txHash: string;
+    params: {
+        txHash: string;
+    }
 };
 
 export interface GetListBlockParams {
@@ -20,6 +22,7 @@ export interface BlockMethods {
 
 export interface BlockLocalVars {
     myVar: string;
+    isRunning: boolean;
 }
 
 export type BlockThis = Service<BlockSettings> & BlockMethods & BlockLocalVars;

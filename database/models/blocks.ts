@@ -1,5 +1,8 @@
 import { Table, Column, Model, DataType, HasMany, ForeignKey } from 'sequelize-typescript';
 import { Transaction } from "./transactions"
+import {
+  literal
+} from "sequelize";
 
 @Table({
   tableName: "blocks",
@@ -8,18 +11,21 @@ import { Transaction } from "./transactions"
 export class Block extends Model {
 
     @Column({
-        type:DataType.UUID,
+        type: DataType.UUID,
         primaryKey: true,
-        field: "id"
+        defaultValue: DataType.UUIDV4
     })
     id?: string;
+    
+    @Column(DataType.STRING)
+    blockNumber? : string;
 
     @Column(DataType.STRING)
     hash? : string;
 
     @Column(DataType.INTEGER)
-    tx_count?: number | null;
+    txcount?: number | null;
 
-    @HasMany(() => Transaction, "block_id")
+    @HasMany(() => Transaction, "blockNumber")
     transactions?: Transaction[];
 }
