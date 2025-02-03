@@ -17,7 +17,7 @@ export const getAll = async (offset?: number, limit?: number) => {
         query.offset = offset;
     }
     
-    query.order = ["createdAt", "ASC"];
+    // query.order = ["createdAt", "ASC"];
 
     return await Transaction.findAll(query);
 };
