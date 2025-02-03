@@ -1,6 +1,6 @@
 import type { Context, Service, ServiceSchema, ServiceSettingSchema } from "moleculer";
 
-import { EnergiService }  from "../module/services";
+import { EnergiService, TransactionService }  from "../module/services";
 import { success, error } from "../module/util/response";
 import {
     GetTxtInfoParams,
@@ -52,8 +52,13 @@ const BlockService: ServiceSchema<BlockSettings> = {
                 method: "GET",
                 path: "/stats",
             },
-            handler(this: BlockThis/*, ctx: Context<ActionHelloParams>*/): string {
-                return `Welcome`;
+            async handler(this: BlockThis/*, ctx: Context<ActionHelloParams>*/): Promise<any> {
+                try { 
+                    const data = await TransactionService.getSum();
+                    return success("success", data, 200);
+                } catch(err) {
+                    return error("Error", { message: err?.message}, 4000);
+                }
             },
         },
 
@@ -62,8 +67,13 @@ const BlockService: ServiceSchema<BlockSettings> = {
                 method: "GET",
                 path: "/tx",
             },
-            handler(this: BlockThis/*, ctx: Context<ActionHelloParams>*/): string {
-                return `Welcome`;
+            async handler(this: BlockThis, ctx: Context<GetListBlockParams>): Promise<any> {
+                try { 
+                    const data = await TransactionService.getTransactions(ctx);
+                    return success("success", data, 200);
+                } catch(err) {
+                    return error("Error", { message: err?.message}, 4000);
+                }
             },
         },
 
@@ -75,21 +85,6 @@ const BlockService: ServiceSchema<BlockSettings> = {
             async handler(this: BlockThis, ctx: Context<any>): Promise<any> {
                 try { 
                     const data = await EnergiService.getTxInfo(ctx.params?.params?.txHash);
-                    return success("success", data, 200);
-                } catch(err) {
-                    return error("Error", { message: err?.message}, 4000);
-                }
-            },
-        },
-
-        index : {
-            rest: {
-                method: "POST",
-                path: "/index ",
-            },
-            async handler(this: BlockThis, ctx: Context<GetListBlockParams>): Promise<any> {
-                try { 
-                    const data = await EnergiService.createIndex(ctx, ctx?.broker?.cacher);
                     return success("success", data, 200);
                 } catch(err) {
                     return error("Error", { message: err?.message}, 4000);

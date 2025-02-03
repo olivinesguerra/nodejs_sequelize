@@ -22,6 +22,7 @@ export interface BlockMethods {
 
 export interface BlockLocalVars {
     myVar: string;
+    isRunning: boolean;
 }
 
 export type BlockThis = Service<BlockSettings> & BlockMethods & BlockLocalVars;

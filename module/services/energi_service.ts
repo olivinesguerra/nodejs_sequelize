@@ -1,7 +1,7 @@
 import { Context, Cacher } from "moleculer";
 
 import * as htmlparser2 from "htmlparser2";
-import { EnergiRepository } from "../repository";
+import { EnergiRepository, BlockRepository } from "../repository";
 import {
     GetListBlockParams,
  } from "../../module/util/typings";
@@ -12,7 +12,7 @@ export const getTxInfo = async (txHash: string) => {
 };
 
 export const getBlocks = async(ctx: Context<GetListBlockParams>) => {
-    return null;
+    return await BlockRepository.getAll(true);
 };
 
 export const createIndex = async (ctx: Context<GetListBlockParams>, cacher: any) => {
